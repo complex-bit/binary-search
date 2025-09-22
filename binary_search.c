@@ -6,17 +6,18 @@
 */
 
 #include <stdio.h>
+#include <stdlib.h>
 
 // Returns a pointer to the found element:
-int *search(int* nums, int size, int target) {
-    int *first = nums;
-    int *last = &nums[size - 1];
-    int *mid;
-    int length;
+int* search(int* nums, int length, int target) {
+    int* first = nums;
+    int* last = &nums[length - 1];
+    int* mid;
+    int jump;
 
-    for (length = size; first <= last; length /= 2) {
+    for (jump = length; first <= last; jump /= 2) {
         
-        mid = (first + (length / 2));  
+        mid = (first + (jump / 2));  
 
         if (*mid < target) {
             first = (mid + 1);
@@ -32,27 +33,35 @@ int *search(int* nums, int size, int target) {
             return mid;
         }
     }
-
     return NULL;
+}
 
+int* get_nums(int length) {
+    int* nums = (int*) malloc((length) * sizeof(int));
+    for (int i = 0; i < length; i++) {
+        nums[i] = i;
+    }
+    return nums;
 }
 
 int main() {
+    int target = 30000000;
+    int LENGTH = 100000000;
+    int* nums = get_nums(LENGTH);
+    int* found = search(nums, LENGTH, target);
 
-    int size = 5;
-    int nums[] = {1, 2, 3, 4, 5}; 
-    int target = 2;
-
-    printf("target: %d\n", target);
-
-    int* found = search(nums, size, target);
-
+    free(nums);
+    nums = NULL;
+    
     if (found == NULL) {
-        printf("Not found");
+        printf("Target: %d not found\n", target);
         return 0;
     }
     
-    printf("found: %d at %p\n", *found, found);
+    printf("Target: %d\n", target);
+    printf("Found: %d at %p\n", *found, found);
     
+
+
     return 0;
 }
