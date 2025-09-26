@@ -1,2 +1,2 @@
 # binary-search
-Binary search in c.
+Binary search with pointers
